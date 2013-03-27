@@ -9,7 +9,7 @@
 -module(ubic_time).
 
 -export([epoch_usecs_to_msecs/1, epoch_msecs_to_usecs/1,
-         epoch_to_datetime/1, datetime_to_epoch/1,
+         epoch_secs_to_datetime/1, datetime_to_epoch_secs/1,
          epoch_msecs_to_datetime/1, datetime_to_epoch_msecs/1,
          now_to_epoch_usecs/0, timestamp_to_epoch_usecs/1,
          now_to_epoch_msecs/0, timestamp_to_epoch_msecs/1,
@@ -38,13 +38,13 @@ epoch_msecs_to_usecs(Milliseconds) when is_integer(Milliseconds) ->
     Milliseconds * 1000.
 
 
--spec epoch_to_datetime(epoch()) -> calendar:datetime1970().
-epoch_to_datetime(Seconds) ->
+-spec epoch_secs_to_datetime(epoch()) -> calendar:datetime1970().
+epoch_secs_to_datetime(Seconds) ->
     calendar:gregorian_seconds_to_datetime(?GREGORIAN_SECONDS_TO_UNIX_EPOCH + Seconds).
 
 
--spec datetime_to_epoch(calendar:datetime1970()) -> epoch().
-datetime_to_epoch(Datetime) ->
+-spec datetime_to_epoch_secs(calendar:datetime1970()) -> epoch().
+datetime_to_epoch_secs(Datetime) ->
     calendar:datetime_to_gregorian_seconds(Datetime) - ?GREGORIAN_SECONDS_TO_UNIX_EPOCH.
 
 
