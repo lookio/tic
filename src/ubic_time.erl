@@ -16,16 +16,18 @@
          epoch_usecs_to_binary/1, binary_to_epoch_usecs/1,
          epoch_msecs_to_binary/1, binary_to_epoch_msecs/1,
          datetime_to_iso8601/1, iso8601_to_datetime/1,
+         gregorian_secs_to_iso8601/1, iso8601_to_gregorian_secs/1,
+         epoch_secs_to_iso8601/1, iso8601_to_epoch_secs/1,
          epoch_msecs_to_iso8601/1, iso8601_to_epoch_msecs/1]).
 
 %% Days between Jan 1, 0001 (beginning of the Gregorian calendar) and Jan 1, 1970 (Unix epoch) in seconds.
 %% 62167219200 = calendar:datetime_to_gregorian_seconds({{1970,1,1},{0,0,0}}).
 -define(GREGORIAN_SECONDS_TO_UNIX_EPOCH, 62167219200).
 
--type epoch()                             :: non_neg_integer().
+-type epoch_seconds()                     :: non_neg_integer().
 -type epoch_milliseconds()                :: non_neg_integer().
 -type epoch_microseconds()                :: non_neg_integer().
--type millisecond()                       :: non_neg_integer().
+-type millisecond()                       :: 0..999.
 
 
 -spec epoch_usecs_to_msecs(epoch_microseconds()) -> epoch_milliseconds().
@@ -38,12 +40,12 @@ epoch_msecs_to_usecs(Milliseconds) when is_integer(Milliseconds) ->
     Milliseconds * 1000.
 
 
--spec epoch_secs_to_datetime(epoch()) -> calendar:datetime1970().
+-spec epoch_secs_to_datetime(epoch_seconds()) -> calendar:datetime1970().
 epoch_secs_to_datetime(Seconds) ->
     calendar:gregorian_seconds_to_datetime(?GREGORIAN_SECONDS_TO_UNIX_EPOCH + Seconds).
 
 
--spec datetime_to_epoch_secs(calendar:datetime1970()) -> epoch().
+-spec datetime_to_epoch_secs(calendar:datetime1970()) -> epoch_seconds().
 datetime_to_epoch_secs(Datetime) ->
     calendar:datetime_to_gregorian_seconds(Datetime) - ?GREGORIAN_SECONDS_TO_UNIX_EPOCH.
 
@@ -151,6 +153,26 @@ local_datetime_to_utc(LocalDatetime, <<Sign, TimezoneHour:2/binary, $:, Timezone
                  Offset when Sign =:= $+ -> LocalSec + Offset
              end,
     calendar:gregorian_seconds_to_datetime(UtcSec).
+
+
+-spec gregorian_secs_to_iso8601(Seconds :: non_neg_integer()) -> binary().
+gregorian_secs_to_iso8601(Seconds) ->
+    datetime_to_iso8601(calendar:gregorian_seconds_to_datetime(Seconds)).
+
+
+-spec iso8601_to_gregorian_secs(binary()) -> Seconds :: non_neg_integer().
+iso8601_to_gregorian_secs(Bin) ->
+    calendar:datetime_to_gregorian_seconds(iso8601_to_datetime(Bin)).
+
+
+-spec epoch_secs_to_iso8601(epoch_seconds()) -> binary().
+epoch_secs_to_iso8601(Seconds) ->
+    datetime_to_iso8601(epoch_secs_to_datetime(Seconds)).
+
+
+-spec iso8601_to_epoch_secs(binary()) -> epoch_seconds().
+iso8601_to_epoch_secs(Bin) ->
+    datetime_to_epoch_secs(iso8601_to_datetime(Bin)).
 
 
 -spec epoch_msecs_to_iso8601(epoch_milliseconds()) -> binary().
