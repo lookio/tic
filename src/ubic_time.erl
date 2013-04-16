@@ -29,6 +29,8 @@
 -type epoch_microseconds()                :: non_neg_integer().
 -type millisecond()                       :: 0..999.
 
+-export_type([epoch_seconds/0, epoch_milliseconds/0, epoch_microseconds/0, millisecond/0]).
+
 
 -spec epoch_usecs_to_msecs(epoch_microseconds()) -> epoch_milliseconds().
 epoch_usecs_to_msecs(Microseconds) when is_integer(Microseconds) ->
