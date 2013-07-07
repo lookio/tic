@@ -8,17 +8,29 @@
 %%%-------------------------------------------------------------------
 -module(ubic_time).
 
--export([epoch_usecs_to_msecs/1, epoch_msecs_to_usecs/1,
-         epoch_secs_to_datetime/1, datetime_to_epoch_secs/1,
-         epoch_msecs_to_datetime/1, datetime_to_epoch_msecs/1,
-         now_to_epoch_usecs/0, timestamp_to_epoch_usecs/1,
-         now_to_epoch_msecs/0, timestamp_to_epoch_msecs/1,
-         epoch_usecs_to_binary/1, binary_to_epoch_usecs/1,
-         epoch_msecs_to_binary/1, binary_to_epoch_msecs/1,
-         datetime_to_iso8601/1, iso8601_to_datetime/1,
-         gregorian_secs_to_iso8601/1, iso8601_to_gregorian_secs/1,
-         epoch_secs_to_iso8601/1, iso8601_to_epoch_secs/1,
-         epoch_msecs_to_iso8601/1, iso8601_to_epoch_msecs/1]).
+-export([ binary_to_epoch_msecs/1
+        , binary_to_epoch_usecs/1
+        , datetime_to_epoch_msecs/1
+        , datetime_to_epoch_secs/1
+        , datetime_to_iso8601/1
+        , epoch_msecs_to_binary/1
+        , epoch_msecs_to_datetime/1
+        , epoch_msecs_to_iso8601/1
+        , epoch_msecs_to_usecs/1
+        , epoch_secs_to_datetime/1
+        , epoch_secs_to_iso8601/1
+        , epoch_usecs_to_binary/1
+        , epoch_usecs_to_msecs/1
+        , gregorian_secs_to_iso8601/1
+        , iso8601_to_datetime/1
+        , iso8601_to_epoch_msecs/1
+        , iso8601_to_epoch_secs/1
+        , iso8601_to_gregorian_secs/1
+        , now_to_epoch_msecs/0
+        , now_to_epoch_usecs/0
+        , timestamp_to_epoch_msecs/1
+        , timestamp_to_epoch_usecs/1
+        ]).
 
 %% Days between Jan 1, 0001 (beginning of the Gregorian calendar) and Jan 1, 1970 (Unix epoch) in seconds.
 %% 62167219200 = calendar:datetime_to_gregorian_seconds({{1970,1,1},{0,0,0}}).
