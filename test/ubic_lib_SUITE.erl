@@ -4,7 +4,6 @@
 %%% @author Paul Oliver <puzza007@gmail.com>
 %%% @author Darach Ennis <darach@gmail.com>
 %%% @copyright (C) 2013 Ubiquiti Networks, Inc.
-%%% @doc Tests for PKCS#5 padding functions.
 %%% @end
 %%%-------------------------------------------------------------------
 -module(ubic_lib_SUITE).
