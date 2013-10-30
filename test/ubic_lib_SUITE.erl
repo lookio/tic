@@ -13,6 +13,11 @@
 -include_lib("proper/include/proper.hrl").
 -include_lib("common_test/include/ct.hrl").
 
+-define(NUMTESTS, 1000).
+-define(PROPTEST(A), true = proper:quickcheck(A(),
+                     [{numtests, ?NUMTESTS},
+                      {constraint_tries, 1000}])).
+
 suite() ->
     [{ct_hooks, [cth_surefire]}, {timetrap, {seconds, 120}}].
 
@@ -84,6 +89,10 @@ groups() ->
       [
        to_val_with_def_test,
        of_val_with_cond_test
+      ]},
+     {ubic_lib_inet, [],
+      [
+       t_encode_decode_ip
       ]}
      ].
 
@@ -93,7 +102,8 @@ all() ->
      {group, ubic_api_util},
      {group, ubic_country},
      {group, ubic_lib_kv},
-     {group, ubic_lib_option}].
+     {group, ubic_lib_option},
+     {group, ubic_lib_inet}].
 
 %% pkcs5
 
@@ -289,3 +299,17 @@ of_val_with_cond_test(_) ->
     CondFalse = fun(X) -> none =:= X end,
     {some,cake} = ubic_lib_option:of_val_with_cond(Noms,CondTrue),
     none = ubic_lib_option:of_val_with_cond(Noms,CondFalse).
+
+%% ubic_lib_inet
+
+%% Test codec symmetrically
+t_encode_decode_ip(_Config) ->
+    ?PROPTEST(prop_encode_decode_ip).
+
+prop_encode_decode_ip() ->
+    ?FORALL(InputIntIP, non_empty( integer(0, 16#FFFFFFFF) ),
+        begin
+            BinIP = ubic_inet:int_to_ip(InputIntIP),
+            OutputIntIP = ubic_inet:ip_to_int(BinIP),
+            true = InputIntIP =:= OutputIntIP
+        end).
