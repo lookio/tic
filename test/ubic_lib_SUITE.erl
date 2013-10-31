@@ -298,9 +298,8 @@ ubic_lib_option_put_test(_) ->
     Noms = cake,
     CondTrue = fun(X) -> cake =:= X end,
     CondFalse = fun(X) -> none =:= X end,
-<<<<<<< HEAD
-    {some,cake} = ubic_lib_option:of_val_with_cond(Noms,CondTrue),
-    none = ubic_lib_option:of_val_with_cond(Noms,CondFalse).
+    {some,cake} = ubic_lib_option:put(Noms, CondTrue),
+    none        = ubic_lib_option:put(Noms, CondFalse).
 
 %% ubic_lib_inet
 
@@ -315,7 +314,3 @@ prop_encode_decode_ip() ->
             OutputIntIP = ubic_inet:ip_to_int(BinIP),
             true = InputIntIP =:= OutputIntIP
         end).
-=======
-    {some,cake} = ubic_lib_option:put(Noms,CondTrue),
-    none = ubic_lib_option:put(Noms,CondFalse).
->>>>>>> Update usage of option operators.
