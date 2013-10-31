@@ -8,6 +8,7 @@
 %%%-------------------------------------------------------------------
 -module(ubic_lib_SUITE).
 
+%% TODO: Do not export_all. Lookup what we actually need to export.
 -compile(export_all).
 
 -include_lib("proper/include/proper.hrl").
@@ -87,8 +88,8 @@ groups() ->
       ]},
      {ubic_lib_option, [parallel],
       [
-       to_val_with_def_test,
-       of_val_with_cond_test
+       ubic_lib_option_get_test,
+       ubic_lib_option_put_test
       ]},
      {ubic_lib_inet, [],
       [
@@ -287,16 +288,17 @@ kv_util_find_test(_) ->
 
 %% ubic_lib_option
 
-to_val_with_def_test(_) ->
+ubic_lib_option_get_test(_) ->
     Noms = {some,cake},
     Nones = {some,tiffin},
-    cake = ubic_lib_option:to_val_with_def(Noms,tiffin),
-    tiffin = ubic_lib_option:to_val_with_def(Nones,tiffin).
+    cake = ubic_lib_option:get(Noms,tiffin),
+    tiffin = ubic_lib_option:get(Nones,tiffin).
 
-of_val_with_cond_test(_) ->
+ubic_lib_option_put_test(_) ->
     Noms = cake,
     CondTrue = fun(X) -> cake =:= X end,
     CondFalse = fun(X) -> none =:= X end,
+<<<<<<< HEAD
     {some,cake} = ubic_lib_option:of_val_with_cond(Noms,CondTrue),
     none = ubic_lib_option:of_val_with_cond(Noms,CondFalse).
 
@@ -313,3 +315,7 @@ prop_encode_decode_ip() ->
             OutputIntIP = ubic_inet:ip_to_int(BinIP),
             true = InputIntIP =:= OutputIntIP
         end).
+=======
+    {some,cake} = ubic_lib_option:put(Noms,CondTrue),
+    none = ubic_lib_option:put(Noms,CondFalse).
+>>>>>>> Update usage of option operators.
