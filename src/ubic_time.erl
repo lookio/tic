@@ -11,6 +11,7 @@
 -export([ datetime_to_epoch_msecs/1
         , datetime_to_epoch_secs/1
         , datetime_to_iso8601/1
+        , datetime_to_iso8601_microseconds/0
         , epoch_msecs_to_datetime/1
         , epoch_msecs_to_iso8601/1
         , epoch_msecs_to_usecs/1
@@ -73,6 +74,18 @@ datetime_to_iso8601({{Year, Month, Day}, {Hour, Min, Sec}}, Suffix) ->
     Mm = bstr:lpad(integer_to_binary(Min), 2, $0),
     Ss = bstr:lpad(integer_to_binary(Sec), 2, $0),
     <<YYYY/binary, $-, MM/binary, $-, DD/binary, $T, Hh/binary, $:, Mm/binary, $:, Ss/binary, Suffix/binary>>.
+
+
+-spec datetime_to_iso8601_microseconds() -> binary().
+datetime_to_iso8601_microseconds() ->
+    {{Year, Month, Day}, {Hour, Minute, Second}} = calendar:universal_time(),
+    {_, _, Microseconds} = os:timestamp(),
+    erlang:iolist_to_binary(io_lib:format("~4..0b-~2..0b-~2..0bT"
+                                          "~2..0b:~2..0b:~2..0b."
+                                          "~6..0bZ",
+                                          [Year, Month, Day,
+                                           Hour, Minute, Second,
+                                           Microseconds])).
 
 
 -spec epoch_msecs_to_datetime(epoch_milliseconds()) -> {calendar:datetime1970(), millisecond()}.
