@@ -217,7 +217,7 @@ timestamp_to_epoch_msecs({Megasecs, Secs, Microsecs}) ->
 
 -spec timestamp_to_epoch_secs(erlang:timestamp()) -> epoch_seconds().
 timestamp_to_epoch_secs({Megasecs, Secs, _Microsecs}) ->
-    Megasecs * 1000000000 + Secs * 1000.
+    Megasecs * 1000000 + Secs.
 
 
 -spec timestamp_to_epoch_usecs(erlang:timestamp()) -> epoch_microseconds().

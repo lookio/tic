@@ -70,7 +70,8 @@ groups() ->
        datetime_to_epoch_test,
        epoch_to_datetime_test,
        epoch_to_iso8601_test,
-       iso8601_to_epoch_test
+       iso8601_to_epoch_test,
+       timestamp_to_epoch_test
       ]},
      {ubic_api_util, [parallel],
       [
@@ -254,6 +255,17 @@ iso8601_to_epoch_test(_) ->
     Epoch = ubic_time:iso8601_to_epoch_secs(<<"1989-07-20T20:30:21Z">>),
     Ms = Epoch * 1000 + 217,
     Ms = ubic_time:iso8601_to_epoch_msecs(<<"1989-07-20T20:30:21.217Z">>).
+
+timestamp_to_epoch_test(_) ->
+    Timestamp = os:timestamp(),
+    Secs = ubic_time:timestamp_to_epoch_secs(Timestamp),
+    Msecs = ubic_time:timestamp_to_epoch_msecs(Timestamp),
+    Usecs = ubic_time:timestamp_to_epoch_usecs(Timestamp),
+    Secs = Msecs div 1000,
+    Msecs = Usecs div 1000,
+    Secs = Usecs div 1000000,
+    Secs = calendar:datetime_to_gregorian_seconds(calendar:now_to_universal_time(Timestamp)) - ?SECONDS_TO_UNIX_EPOCH.
+
 
 %% ubic_api_util
 
