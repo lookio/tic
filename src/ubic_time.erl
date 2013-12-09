@@ -78,8 +78,9 @@ datetime_to_iso8601({{Year, Month, Day}, {Hour, Min, Sec}}, Suffix) ->
 
 -spec datetime_to_iso8601_usecs() -> binary().
 datetime_to_iso8601_usecs() ->
-    {{Year, Month, Day}, {Hour, Minute, Second}} = calendar:universal_time(),
-    {_, _, Microseconds} = os:timestamp(),
+    {_, _, Microseconds} = Now = os:timestamp(),
+    {{Year, Month, Day},
+     {Hour, Minute, Second}} = calendar:now_to_universal_time(Now),
     erlang:iolist_to_binary(io_lib:format("~4..0b-~2..0b-~2..0bT"
                                           "~2..0b:~2..0b:~2..0b."
                                           "~6..0bZ",
