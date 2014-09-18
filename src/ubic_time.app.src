@@ -1,0 +1,12 @@
+{application, ubic_time,
+ [
+  {description, "Date and time conversion."},
+  {vsn, "1.0.0"},
+  {registered, []},
+  {applications,
+    [ kernel
+    , stdlib
+    , bstr
+    ]},
+  {env, []}
+ ]}.
