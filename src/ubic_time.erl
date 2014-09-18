@@ -3,6 +3,7 @@
 %%% @author Mahesh Paolini-Subramanya <mahesh@dieswaytoofast.com>
 %%% @author Paul Oliver <puzza007@gmail.com>
 %%% @author Siraaj Khandkar <siraaj@khandkar.net>
+%%% @author Michael Truog <mjtruog@gmail.com>
 %%% @copyright (C) 2013 Ubiquiti Networks, Inc.
 %%% @doc Functions that convert from and to common time formats.
 %%% @end
