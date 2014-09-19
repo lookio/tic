@@ -8,7 +8,7 @@
 %%% @doc Functions that convert from and to common time formats.
 %%% @end
 %%%-------------------------------------------------------------------
--module(ubic_time).
+-module(tic).
 
 -export_type(
     [ epoch_microseconds/0
