@@ -19,6 +19,7 @@
 
 -export(
     [ datetime_to_epoch_msecs/1
+    , datetime_plus_days/2
     , datetime_to_epoch_secs/1
     , datetime_to_iso8601/1
     , datetime_to_iso8601_usecs/0
@@ -293,3 +294,9 @@ timestamp_to_epoch_secs({Megasecs, Secs, _Microsecs}) ->
     epoch_microseconds().
 timestamp_to_epoch_usecs({Megasecs, Secs, Microsecs}) ->
     Megasecs * 1000000000000 + Secs * 1000000 + Microsecs.
+
+-spec datetime_plus_days(calendar:datetime(), integer()) -> calendar:datetime().
+datetime_plus_days({Date, Time}, N) ->
+    GregDays = calendar:date_to_gregorian_days(Date),
+    NextDay = calendar:gregorian_days_to_date(GregDays + N),
+    {NextDay, Time}.
