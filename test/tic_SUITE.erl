@@ -19,6 +19,7 @@
 -export(
     [ t_datetime_to_epoch_test/1
     , t_datetime_to_iso8601_test/1
+    , t_datetime_plus_day/1
     , t_epoch_to_datetime_test/1
     , t_epoch_to_iso8601_test/1
     , t_gregorian_seconds_to_iso8601_test/1
@@ -43,6 +44,7 @@ groups() ->
     Tests =
         [ t_datetime_to_epoch_test
         , t_datetime_to_iso8601_test
+        , t_datetime_plus_day
         , t_epoch_to_datetime_test
         , t_epoch_to_iso8601_test
         , t_gregorian_seconds_to_iso8601_test
@@ -126,3 +128,8 @@ t_timestamp_to_epoch_test(_) ->
     UnivTime = calendar:now_to_universal_time(Timestamp),
     GregSecs = calendar:datetime_to_gregorian_seconds(UnivTime),
     Secs = GregSecs - GregEpochDiff.
+
+t_datetime_plus_day(_) ->
+    Date = {{2014,10,3},{14,39,58}},
+    NextDate = {{2014,10,4},{14,39,58}},
+    NextDate = tic:datetime_plus_days(Date, 1).
